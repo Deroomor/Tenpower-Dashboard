@@ -1,0 +1,116 @@
+﻿@inherits Azeroth.MVC.ViewPageCSHtml
+@{
+    List<Tenpower.UI.MenuInfo> lstMenuInfo = (List<Tenpower.UI.MenuInfo>)ViewData["__menuInfo"];
+    Tenpower.UI.MenuInfo menuLeaf = new Tenpower.UI.MenuInfo() { Id = -1, Pid = -1 };
+    menuLeaf = lstMenuInfo.FirstOrDefault(x => x.IsLeaf) ?? menuLeaf;
+    
+    Tenpower.UI.MenuInfo menuRoot = new Tenpower.UI.MenuInfo() { Id = -1, Pid = -1 };
+    menuRoot = lstMenuInfo.FirstOrDefault(x => x.IsRoot) ?? menuRoot;
+    
+    Stack<Tenpower.UI.MenuInfo> breadStack = new Stack<Tenpower.UI.MenuInfo>();
+    while (menuLeaf!=null && menuLeaf.Pid>=0)
+    {
+        breadStack.Push(menuLeaf);
+        menuLeaf = lstMenuInfo.FirstOrDefault(x => x.Id == menuLeaf.Pid);
+    }
+
+    List<Tenpower.UI.MenuInfo> lstNav = lstMenuInfo.Where(x=>x.Pid==0).ToList();
+}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="azeroth">
+    <meta name="author" content="eeroom">
+    <title>@this.Title</title>
+    <link href="/Assets/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="/Assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet" />
+    <link href="/Assets/css/Layout.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+      <script src="/Assets/js/html5shiv.min.js"></script>
+      <script src="/Assets/js/respond.min.js"></script>
+    <![endif]-->
+    <script src="/Assets/js/jquery-1.11.2.js"></script>
+    <script src="/Assets/bootstrap-3.3.5/js/bootstrap.js"></script>
+    <script src="/Assets/js/ie10-viewport-bug-workaround.js"></script>
+    <script src="/Assets/echarts-2.2.6/echarts.js"></script>
+    <script>
+        $(function () {
+            window.require.config({
+                paths: {
+                    echarts: '/Assets/echarts-2.2.6'
+                }
+            });
+        });
+    </script>
+    @RenderSection("style", false)
+    
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container" style="padding-right: 30px">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">导航</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Tenpower</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    @{
+                            foreach (var menu in lstNav)
+                            {
+                                <li class="@(menu.IsRoot?"active":string.Empty)"><a href="@menu.Url">@menu.Name</a></li>
+                            }
+                        }
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span>@(this.Html.Space(1))<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">个人中心</a></li>
+                            <li><a href="#">退出</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row">
+            @*面包屑导航*@
+            <ol class="breadcrumb">
+                @{
+                      while (breadStack.Count>0)
+                        {
+                            var menu = breadStack.Pop();
+                            <li class="@(breadStack.Count==0?"active":string.Empty)">@Html.Raw(breadStack.Count==0?menu.Name:string.Format("<a href='{0}'>{1}</a>",menu.Url,menu.Name))</li>
+                        }
+                    }
+            </ol>
+        </div>
+        @RenderBody()
+        <div class="row">
+            <div class="col-sm-12">
+                <footer class="footer">
+                    <p class="text-center">版权所有&copy;2017 丢了光影</p>
+                </footer>
+            </div>
+        </div>
+    </div>
+    @RenderSection("script", false)
+</body>
+</html>

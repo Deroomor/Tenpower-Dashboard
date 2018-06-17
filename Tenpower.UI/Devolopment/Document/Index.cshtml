@@ -1,0 +1,24 @@
+﻿@inherits Azeroth.MVC.ViewPageCSHtml
+@{
+    this.Layout = "/Layout/LayoutContainer.cshtml";
+    this.Title = "文档和博客MEF";
+    List<Tenpower.Model.DevDoc> lstDoc = (List<Tenpower.Model.DevDoc>)this.ViewData["lstDoc"];
+}
+
+@section style{
+
+}
+@section script{
+
+}
+<div class="row" >
+    <div class="col-md-12">
+        <ul>
+            @foreach (var doc in lstDoc)
+            {
+                <li><a target="_blank" href="item?Id=@(doc.Id)">@doc.Title</a></li>
+            }
+        </ul>
+    </div>
+</div>
+

@@ -1,0 +1,124 @@
+﻿@inherits Azeroth.MVC.ViewPageCSHtml
+@{
+    
+}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="azeroth">
+    <meta name="author" content="eeroom">
+    <title></title>
+    <link href="/Assets/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="/Assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet" />
+    <link href="/Assets/css/Layout.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+      <script src="/Assets/js/html5shiv.min.js"></script>
+      <script src="/Assets/js/respond.min.js"></script>
+    <![endif]-->
+    <script src="/Assets/js/jquery-1.11.2.js"></script>
+    <script src="/Assets/bootstrap-3.3.5/js/bootstrap.js"></script>
+    <script src="/Assets/js/ie10-viewport-bug-workaround.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            $(".sidebar a[data-toggle=collapse]").bind("click", {}, function () {
+                //处理菜单的折叠，右边的指示箭头
+                $(".sidebar .in").collapse("hide");
+                var triggers = $(".sidebar a[data-toggle=collapse]").not(this);
+                triggers.find(".glyphicon-chevron-down").hide();
+                triggers.find(".glyphicon-chevron-right").show();
+                $(this).find(".glyphicon-chevron-down").toggle();
+                $(this).find(".glyphicon-chevron-right").toggle();
+            });
+        });
+    </script>
+    @RenderSection("style", false)
+    @RenderSection("script", false)
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid" style="padding-right: 30px">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">导航</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Tenpower</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="#">晴雨表 </a></li>
+                    <li><a href="#">供应链</a></li>
+                    <li><a href="#">存量经营</a></li>
+                    <li class="active"><a href="#">系统设置</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span>@(this.Html.Space(1))<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">个人中心</a></li>
+                            <li><a href="#">退出</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-1 sidebar">
+                <ul class="nav">
+                    <li><a href="#__menu1" data-toggle="collapse"><strong>基础数据</strong><span class="pull-right"><span class="glyphicon glyphicon-chevron-down"></span><span style="display: none" class="glyphicon glyphicon-chevron-right"></span></span></a></li>
+                    <li>
+                        <ul class="nav collapse in" id="__menu1">
+                            <li class="active-tenpower "><a href="#"><span class="glyphicon glyphicon-link"></span>@(this.Html.Space(1))Import</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-link"></span>@(this.Html.Space(1))M1测试</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-link"></span>@(this.Html.Space(1))M1问题</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-link"></span>@(this.Html.Space(1))M1加工量</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-link"></span>@(this.Html.Space(1))M2失效</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-link"></span>@(this.Html.Space(1))市场失效</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-link"></span>@(this.Html.Space(1))市场发货量</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-link"></span>@(this.Html.Space(1))发货计划</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-link"></span>@(this.Html.Space(1))加工计划</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-link"></span>@(this.Html.Space(1))在制任务令</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#__menu2" data-toggle="collapse"><strong>系统设置</strong><span class="pull-right"><span style="display: none" class="glyphicon glyphicon-chevron-down"></span><span class="glyphicon glyphicon-chevron-right"></span></span></a></li>
+                    <li>
+                        <ul class="nav collapse" id="__menu2">
+                            <li><a href="#"><span class="glyphicon glyphicon-link"></span>@(this.Html.Space(1))模块分组</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-link"></span>@(this.Html.Space(1))任务设置</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-link"></span>@(this.Html.Space(1))晴雨表</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-11 col-md-offset-1 main">
+                @RenderBody()
+            </div>
+        </div>
+        <div class="row footer">
+            <div class="col-md-11 col-md-offset-1">
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <p class="text-center">版权所有&copy;2017 丢了光影</p>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

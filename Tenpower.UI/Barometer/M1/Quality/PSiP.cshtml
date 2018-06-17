@@ -1,0 +1,340 @@
+﻿@inherits Azeroth.MVC.ViewPageCSHtml
+@{
+    this.Layout = "/Layout/LayoutContainer.cshtml";
+    this.Title = "一次加工质量月报";
+}
+@section style{
+    <style>
+        .main {
+            background-image: url(/Assets/img/6.jpg);
+            border-radius: 5px 5px;
+        }
+
+        .report-title {
+            padding-bottom: 5px;
+        }
+
+            .report-title .dropdown {
+                width: 80px;
+            }
+
+                .report-title .dropdown .dropdown-menu {
+                    min-width: 80px;
+                    width: 80px;
+                    text-align: center;
+                }
+
+                    .report-title .dropdown .dropdown-menu li a {
+                        padding-left: 0;
+                        padding-right: 0;
+                    }
+
+        @@media (min-width:768px) {
+            .report-title .col-sm-7 {
+                padding-left: 0;
+                padding-right: 0;
+                text-align: right;
+            }
+
+                .report-title .col-sm-7 .h2 {
+                    text-align: right;
+                    vertical-align: central;
+                }
+
+            .report-title .col-sm-5 {
+                padding-left: 0;
+                padding-right: 0;
+                padding-top: 18px;
+            }
+
+                .report-title .col-sm-5 .dropdown {
+                    float: left;
+                }
+        }
+
+        .panel-heading a {
+            color: #fff;
+        }
+
+        .report-grid {
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+
+            .report-grid .row > div {
+                border: 1px solid #000;
+                border-bottom: 0px solid #000;
+            }
+
+        .report-panel {
+            margin-bottom: 0;
+        }
+    </style>
+}
+@section script{
+    @*    <script src="/Assets/js/jquery-1.11.2.js"></script>
+    <script src="/Assets/echarts-2.2.6/echarts.js"></script>*@
+
+    <script src="/Assets/xheditor-1.2.2/xheditor-1.2.2.min.js"></script>
+    <script src="/Assets/xheditor-1.2.2/xheditor_lang/zh-cn.js"></script>
+    <script src="/Assets/js/azeroth-1.0.js"></script>
+    <script>
+        $(function () {
+
+            $("#windowEidt textarea").xheditor({
+                "shortcuts": {
+                    "ctrl+v": function () {
+                        var rst = clipboardHelper.GetValueWithBase64();
+                        if (!rst)
+                            return true;
+                        rst = "data:image/png;base64," + rst;
+                        this.pasteHTML('<img src="'+rst+'" />');
+                        return false;
+                    }
+                }
+            });
+
+
+            var opt;
+            opt = window.azeroth.getEchartOPT();
+            opt.legend.data.push("一线", "二线");
+            opt.xAxis.data.push("1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月");
+            opt.series.push({ name: "一线", type: "line", data: [96.1, 96.2, 99, 98.1, 96.5, 97, 98, 96, 97] });
+            opt.series.push({ name: "二线", type: "line", data: [94.1, 95.2, 94, 97.1, 93.5, 95, 98, 94, 98] });
+            opt.toolbox.show = true;
+            opt.toolbox.feature.btnedit.show = true;
+            opt.toolbox.feature.btnedit.onclick = function () {
+                $("#windowEidt h4").text("综合直通率备注");
+                $("#windowEidt").modal("show");
+            };
+            azeroth.createEchartImg("#chart1", opt, null, ["echarts", "echarts/chart/line", "echarts/chart/bar"]);
+
+
+
+            opt = window.azeroth.getEchartOPT();
+            opt.legend.data.push("V1.5", "V1.6");
+            opt.xAxis.data.push("1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月");
+            opt.series.push({ name: "V1.5", type: "line", data: [90, 90.2, 90, 90.1, 90.5, 90, 90, 90, 90] });
+            opt.series.push({ name: "V1.6", type: "line", data: [91.1, 91.2, 91, 91.1, 91.5, 91, 91, 91, 91] });
+            opt.toolbox.show = true;
+            opt.toolbox.feature.btnedit.show = true;
+            opt.toolbox.feature.btnedit.onclick = function () {
+                $("#windowEidt h4").text("动力电池直通率备注");
+                $("#windowEidt").modal("show");
+            };
+            azeroth.createEchartImg("#chart3", opt);
+
+            opt = window.azeroth.getEchartOPT();
+            opt.legend.data.push("V2.2", "V2.6");
+            opt.xAxis.data.push("1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月");
+            opt.series.push({ name: "V2.2", type: "line", data: [90, 90.2, 90, 90.1, 90.5, 90, 90, 90, 90] });
+            opt.series.push({ name: "V2.6", type: "line", data: [91.1, 91.2, 91, 91.1, 91.5, 91, 91, 91, 91] });
+            opt.toolbox.show = true;
+            opt.toolbox.feature.btnedit.show = true;
+            opt.toolbox.feature.btnedit.onclick = function () {
+                $("#windowEidt h4").text("容量电池直通率备注");
+                $("#windowEidt").modal("show");
+            };
+            azeroth.createEchartImg("#chart4", opt);
+
+            $(".panel-heading a[data-toggle=modal]").bind("click", {}, function () {
+                $("#windowEidt h4").text($(this).data("windowtitle"));
+
+                var opt = window.azeroth.getEchartOPT();
+                opt.legend.data.push("自动线体", "手动线体");
+                opt.xAxis.data.push("1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月");
+                opt.series.push({ name: "自动线体", type: "line", data: [90, 90.2, 90, 90.1, 90.5, 90, 90, 90, 90] });
+                opt.series.push({ name: "手动线体", type: "line", data: [91.1, 91.2, 91, 91.1, 91.5, 91, 91, 91, 91] });
+                opt.toolbox.show = true;
+                opt.toolbox.feature.btnedit.show = true;
+                opt.toolbox.feature.btnedit.onclick = function () {
+                    $("#windowEidt h4").text("自动&手动直通率备注");
+                    $("#windowEidt").modal("show");
+                };
+                azeroth.createEchartImg("#chart2", opt);
+            });
+
+            $(".report-title .dropdown-menu a").bind("click", {}, function () {
+                $("#month").val($(this).data("month"));
+                $("form").submit();
+            });
+        });
+
+    </script>
+}
+<object id="clipboardHelper" classid="clsid:CEB145DD-D2CF-49A3-9560-02EC54A29F11"  ></object>
+<div class="main">
+    <form method="get">
+        <input type="hidden" id="month" name="month" value="@(this.ViewData["month"])" />
+        <div class="row report-title">
+            <div class="col-sm-7">
+                <p class="h2 text-center">一次加工质量月报</p>
+            </div>
+            <div class="col-sm-5">
+                <div class="dropdown center-block">
+                    <button class="btn btn-default" type="button" data-toggle="dropdown">@(((DateTime)this.ViewData["month"]).ToString("yyyy-MM"))</button>
+                    <ul class="dropdown-menu">
+                        <li><a href="#" data-month="2017-04">2017-04</a></li>
+                        <li><a href="#" data-month="2017-05">2017-05</a></li>
+                        <li><a href="#" data-month="2017-06">2017-06</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="panel panel-primary report-panel">
+        <div class="panel-heading">
+            <a href="#windowEidt" data-toggle="modal" title="编辑" class="pull-right btn-report-remark-edit" data-windowtitle="本期导读"><span class="glyphicon glyphicon-wrench"></span></a>
+            <h3 class="panel-title">本期导读</h3>
+        </div>
+        <div class="panel-body">
+            <p>1、本月发货32154pcs,综合直通率98.1%,比上月提高0.4%</p>
+            <p>2、本月问题3起，停线问题0起，批次问题3起。</p>
+        </div>
+    </div>
+    <div class="modal fade" tabindex="-1" id="windowEidt">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">本期导读</h4>
+                </div>
+                <div class="modal-body">
+                    <textarea name="daodu"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-primary report-panel">
+        <div class="panel-heading">
+            <a href="#windowEidt" data-toggle="modal" title="编辑" class="pull-right btn-report-remark-edit" data-windowtitle="目标"><span class="glyphicon glyphicon-wrench"></span></a>
+            <h3 class="panel-title">目标</h3>
+        </div>
+        <div class="panel-body">
+            <p>1、综合直通率达到99%</p>
+        </div>
+    </div>
+    <div class="panel panel-primary report-panel">
+        <div class="panel-heading">
+            <h3 class="panel-title">质量状态</h3>
+        </div>
+        <div class="panel-body report-grid">
+            <div class="row">
+                @*直通率，按模块类别，按ems厂*@
+                <div class="col-sm-6">
+                    <p class="text-center h3">综合直通率</p>
+                    <div id="chart1" style="height: 400px"></div>
+                    <p>悍马2.2容量的注液问题</p>
+                </div>
+                <div class="col-sm-6">
+                    <p class="text-center h3">自动&手动线体直通率</p>
+                    <div id="chart2" style="height: 400px"></div>
+                    <p>
+                        1、自动化线体来料问题影响直通率<br />
+                        2、湖南杉杉来料不足
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                @*累计问题*@
+                <div class="col-sm-6">
+                    <p class="text-center h3">V1.5&V1.6直通率</p>
+                    <div id="chart3" style="height: 400px"></div>
+                    <p>隔膜问题影响直通率</p>
+                </div>
+                <div class="col-sm-6">
+                    <p class="text-center h3">V2.2&V2.6直通率</p>
+                    <div id="chart4" style="height: 400px"></div>
+                    <p>电解液发生批次问题影响直通率</p>
+                </div>
+            </div>
+            <div class="row">
+                @*一加工概况*@
+                <div class="col-sm-12">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-primary report-panel">
+        <div class="panel-heading">
+            <h3 class="panel-title">持续改进措施</h3>
+        </div>
+        <div class="panel-body report-grid" style="padding: 0">
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>超小屏幕
+            <small>手机 (&lt;768px)</small>
+                            </th>
+                            <th>小屏幕
+            <small>平板 (&ge;768px)</small>
+                            </th>
+                            <th>中等屏幕
+            <small>桌面显示器 (&ge;992px)</small>
+                            </th>
+                            <th>大屏幕
+            <small>大桌面显示器 (&ge;1200px)</small>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th class="text-nowrap" scope="row">栅格系统行为</th>
+                            <td>总是水平排列</td>
+                            <td colspan="3">开始是堆叠在一起的，当大于这些阈值时将变为水平排列C</td>
+                        </tr>
+                        <tr>
+                            <th class="text-nowrap" scope="row"><code>.container</code> 最大宽度</th>
+                            <td>None （自动）</td>
+                            <td>750px</td>
+                            <td>970px</td>
+                            <td>1170px</td>
+                        </tr>
+                        <tr>
+                            <th class="text-nowrap" scope="row">类前缀</th>
+                            <td><code>.col-xs-</code></td>
+                            <td><code>.col-sm-</code></td>
+                            <td><code>.col-sm-</code></td>
+                            <td><code>.col-lg-</code></td>
+                        </tr>
+                        <tr>
+                            <th class="text-nowrap" scope="row">列（column）数</th>
+                            <td colspan="4">12</td>
+                        </tr>
+                        <tr>
+                            <th class="text-nowrap" scope="row">最大列（column）宽</th>
+                            <td class="text-muted">自动</td>
+                            <td>~62px</td>
+                            <td>~81px</td>
+                            <td>~97px</td>
+                        </tr>
+                        <tr>
+                            <th class="text-nowrap" scope="row">槽（gutter）宽</th>
+                            <td colspan="4">30px （每列左右均有 15px）</td>
+                        </tr>
+                        <tr>
+                            <th class="text-nowrap" scope="row">可嵌套</th>
+                            <td colspan="4">是</td>
+                        </tr>
+                        <tr>
+                            <th class="text-nowrap" scope="row">偏移（Offsets）</th>
+                            <td colspan="4">是</td>
+                        </tr>
+                        <tr>
+                            <th class="text-nowrap" scope="row">列排序</th>
+                            <td colspan="4">是</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>

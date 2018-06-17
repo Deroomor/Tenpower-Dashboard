@@ -1,0 +1,120 @@
+﻿@inherits Azeroth.MVC.ViewPageCSHtml
+@{
+    
+}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+    <title>@this.Title</title>
+    <link href="/Assets/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="/Assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet" />
+    <!-- Custom styles for this template -->
+    <link href="/Assets/css/dashboard.css" rel="stylesheet" />
+    <style type="text/css">
+        .main {
+            padding-left:6px;
+            padding-right:26px;
+            padding-top:4px;
+        }
+         .navbar-inverse .navbar-nav > li > a {
+            color:white;
+           
+        }
+         .navbar-inverse .navbar-nav > li > a:hover {
+            color:red;
+        }
+
+        .navbar-nav > li > a {
+            text-align:center;
+            padding-bottom:2px;
+            padding-top:8px;
+        }
+
+        .htt-img {
+            width:63px;
+            height:38px;
+        }
+        .panel {
+            margin-bottom:6px;
+        }
+        .panel-primary > .panel-heading {
+            background-color:#99CCFF;
+            color:black;
+        }
+        .table > tbody > tr > td {
+            vertical-align:middle;
+        }
+        
+    </style>
+    @RenderSection("sty")
+    
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="/Assets/js/html5shiv.min.js"></script>
+      <script src="/Assets/js/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body style="padding-top:68px">
+    <nav class="navbar navbar-inverse navbar-fixed-top"  style="background-color:rgb(51, 122, 183)">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">切换导航</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#" style="color:white;height:68px;line-height:34px">EmbPower</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-left">
+                    <li><a href="#"><div><img class="htt-img" src="/Assets/img/barometer.png" /></div><div>晴雨表</div></a></li>
+                    <li><a href="#"><div><img class="htt-img" src="/Assets/img/fdppm.png" /></div><div>FDPPM</div></a></li>
+                    <li><a href="#"><div><img class="htt-img" src="/Assets/img/throughRate.png" /></div><div>直通率</div></a></li>
+                    <li><a href="#"><div><img class="htt-img" src="/Assets/img/warningEarly.png" /></div><div>预警管理</div></a></li>
+                    <li><a href="#"><div><img class="htt-img" src="/Assets/img/setup.png" /></div><div>设置</div></a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right" style="padding-right:28px">
+                    <li><a href="#" title="退出" style="padding-top:22px;height:68px"  ><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span></a></li>   
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-2 col-md-1 sidebar" style="top:68px">
+                <ul class="nav nav-sidebar">
+                    <li class="mcl100"><a href="#">一次加工</a></li>
+                    <li class="mcl200"><a href="#">一次加工</a></li>
+                    <li class="mcl200"><a href="#"><span style="padding-left:10px"><span class="glyphicon glyphicon-send"></span></span>&nbsp;KPI监控</a></li>
+                </ul>
+            </div>
+            <div class="col-sm-10 col-sm-offset-2 col-md-11 col-md-offset-1 main" >
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+
+     <nav class="navbar navbar-inverse navbar-fixed-bottom" style="background-color:rgb(245, 245, 245);border:none;text-align:center;min-height:20px">
+         &copy;2016 丢了光影  Emb项目组数据可视化分析平台
+    </nav>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/Assets/js/jquery-1.11.2.min.js"></script>
+    <script src="/Assets/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+    <script src="/Assets/js/ie10-viewport-bug-workaround.js"></script>
+    @RenderSection("spt")
+</body>
+</html>
+

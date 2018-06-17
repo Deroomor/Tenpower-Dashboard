@@ -1,0 +1,77 @@
+﻿<#@ template debug="true" hostspecific="true" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Data" #>
+<#@ assembly name="System.Xml" #>
+<#@ assembly name="System.Configuration" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Data.SqlClient" #>
+<#@ import namespace="System.Data" #>
+<#@ output extension=".cs" #>
+using System;
+using Azeroth.OMT;
+
+namespace Tenpower.Model
+{
+<#
+    //System.Diagnostics.Debugger.Launch();//---进入调试
+    string nameClass= System.IO.Path.GetFileNameWithoutExtension(this.Host.TemplateFile);
+    string configPath=Host.ResolveAssemblyReference("$(ProjectDir)")+"app.config";
+    var configPathMap=new System.Configuration.ExeConfigurationFileMap(){ExeConfigFilename=configPath};
+    var appConfig=System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(configPathMap, System.Configuration.ConfigurationUserLevel.None);
+    var connSection= appConfig.GetSection("connectionStrings") as System.Configuration.ConnectionStringsSection;  
+    string cnnstr= connSection.ConnectionStrings["T4"].ConnectionString;
+    string cmdstrForColDescription=string.Format("with htt as({0}),gmm as ({1}) select htt.name,gmm.value from htt left join gmm on htt.column_id=gmm.minor_id",
+                             "select * from sys.columns where object_id=OBJECT_ID('"+nameClass+"')",
+                             "select * from sys.extended_properties where sys.extended_properties.major_id=OBJECT_ID('"+nameClass+"')");
+    this.WriteLine(string.Format("{1}public partial class {0}",nameClass,new String(' ',4)));
+    this.WriteLine(new String(' ',4)+"{");
+    List<string> lstEnum=new List<string>();
+    using (SqlConnection cnn = new SqlConnection(cnnstr))
+            {
+                using (SqlCommand cmd = cnn.CreateCommand())
+                {
+                    cnn.Open();
+                    cmd.CommandText = "select * from "+nameClass;
+                    SqlDataReader rr=cmd.ExecuteReader();
+                    DataTable table = rr.GetSchemaTable();
+                    rr.Close();
+                    cmd.CommandText=cmdstrForColDescription;
+                    using(SqlDataAdapter adapater=new SqlDataAdapter(cmd))
+                    {
+                        DataTable tableDesp=new DataTable();
+                        adapater.Fill(tableDesp);
+                        foreach (DataRow row in table.Rows)
+                        {
+                            string colName = row["ColumnName"].ToString();
+                            if(colName.EndsWith("Enum"))
+                                  lstEnum.Add(colName.Substring(0,colName.Length-4));
+                            string colType = row["DataType"].ToString().Substring(7);
+							bool allowDBNull=Convert.ToBoolean(row["AllowDBNull"]);
+                            if(allowDBNull && !colType.Equals("String"))
+                                    colType="Nullable<"+colType+">";
+                            this.WriteLine(string.Format("{3}/// <summary>",colType,colName,"{set;get;}",new String(' ',8)));
+                            this.WriteLine(string.Format("{3}///{4}",colType,colName,"{set;get;}",new String(' ',8),tableDesp.Select("name='"+colName+"'")[0]["value"].ToString().Replace("\r\n"," ").Replace("\n"," ").Replace("\n"," ")));
+                            this.WriteLine(string.Format("{3}/// </summary>",colType,colName,"{set;get;}",new String(' ',8)));
+							if(allowDBNull && colType.Equals("String") &&!colName.EndsWith("Enum"))
+							         this.WriteLine(string.Format("{2}[XStringNullable({0},{1})]",row["ColumnSize"],allowDBNull.ToString().ToLower(),new String(' ',8)));
+                            if(colType.Equals("String") &&colName.EndsWith("Enum"))
+							         this.WriteLine(string.Format("{2}[XStringToEnum]",row["ColumnSize"],allowDBNull.ToString().ToLower(),new String(' ',8)));
+							this.WriteLine(string.Format("{3}public {0} {1} {2}",colName.EndsWith("Enum")?lstEnum[lstEnum.Count-1]:colType,colName,"{set;get;}",new String(' ',8)));
+                        }
+                    }
+                }
+            }
+    foreach(string name in lstEnum)
+    {
+        this.WriteLine(string.Empty);
+        this.WriteLine(string.Format("{0}public enum {1}",new String(' ',8),name));
+        this.WriteLine(new String(' ',8)+"{");
+        this.WriteLine(new String(' ',8)+"");
+        this.WriteLine(new String(' ',8)+"}");
+    }
+
+ #>
+    }
+}

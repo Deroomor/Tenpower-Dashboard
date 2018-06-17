@@ -1,0 +1,37 @@
+﻿@inherits Azeroth.MVC.ViewPageCSHtml
+@{
+    Tenpower.Model.DevDoc doc = (Tenpower.Model.DevDoc)this.ViewData["doc"];
+   this.Title = @doc.Title;
+    this.Layout = "/Layout/LayoutContainer.cshtml";
+}
+
+@section style{
+    <style type="text/css">
+        .sidebar-right {
+            position:absolute;
+            left:100%;
+            top:20px;
+            min-height:200px;
+            min-width:120px;
+            /*border:1px solid red;*/
+        }
+
+        
+    </style>
+}
+
+
+<div class="row" >
+    <div class="col-md-12">
+        <h1>@doc.Title</h1>
+        @this.Html.Raw(doc.Value)
+        <div class="sidebar-right">
+        <a  href="Add?Id=@(doc.Id)">编辑</a>
+    </div>
+    </div>
+    
+</div>
+
+@section script{
+
+}

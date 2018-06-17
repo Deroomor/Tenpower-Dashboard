@@ -1,0 +1,79 @@
+﻿.main {
+    padding-top:10px;
+    padding-bottom:40px;
+}
+.active-tenpower {
+    color: #fff;
+    background-color: #337ab7;
+}
+
+    .active-tenpower  > a {
+        color: #fff;
+        background-color: #337ab7;
+    }
+
+        .active-tenpower  > a:hover {
+            color: #fff;
+            background-color: #337ab7 !important;
+        }
+
+.collapse > li > a:hover {
+    background-color:#337ab7;
+    color: #fff;
+}
+
+.sidebar {
+    display: none;
+    background-color: rgb(245,245,245);
+    padding-left: 0;
+    padding-right: 0;
+    left:0;
+    top: 50px;
+    bottom: 0;
+    position:fixed;
+}
+
+    .sidebar .nav > li > a {
+        padding-right: 5px;
+    }
+
+@media (min-width: 992px)  {
+    .sidebar {
+        display:block;
+    }
+}
+
+body {
+    padding-top:50px;
+
+}
+
+.footer {
+      background-color: rgb(245,245,245);
+      margin-top:10px;
+      padding-top:4px;
+      margin-left:-20px;
+      margin-right:-20px;
+}
+
+.row .breadcrumb {
+    margin-bottom:10px;
+}
+.xschart {
+    height:300px;
+}
+
+.smchart {
+    height:400px;
+}
+
+.mdchart {
+    height:500px;
+}
+
+.lgchart {
+    height:600px;
+}
+
+
+

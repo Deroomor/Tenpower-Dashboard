@@ -1,0 +1,12 @@
+﻿with htt as(
+select *
+from sys.columns 
+where object_id=OBJECT_ID('dbo.TRAILER_REGISTER_INFO'))
+,gmm as(
+select *
+ from sys.extended_properties
+where sys.extended_properties.major_id=OBJECT_ID('dbo.TRAILER_REGISTER_INFO')
+)
+select htt.name,gmm.value
+from htt
+left join gmm on htt.column_id=gmm.minor_id
