@@ -9,7 +9,7 @@ namespace Tenpower.UI.Admin
     {
        
 
-        public Azeroth.MVC.ActionResult Import() 
+        public Azeroth.Klz.ActionResult Import() 
         {
             return View();
         }

@@ -5,10 +5,10 @@ using System.Web;
 using System.ComponentModel.Composition;
 namespace Tenpower.UI
 {
-    public abstract class NavController:Azeroth.MVC.Controller
+    public abstract class NavController:Azeroth.Klz.Controller
     {
-        static System.ComponentModel.Composition.Hosting.DirectoryCatalog catalog = 
-            new System.ComponentModel.Composition.Hosting.DirectoryCatalog(System.Web.HttpRuntime.BinDirectory);
+        static System.ComponentModel.Composition.Hosting.CompositionContainer container =
+            new System.ComponentModel.Composition.Hosting.CompositionContainer(System.AppDomain.CurrentDomain.GetData("__@@catalog") as System.ComponentModel.Composition.Hosting.DirectoryCatalog);
         public override void OnExecute()
         {
             //权限校验
@@ -17,8 +17,8 @@ namespace Tenpower.UI
              var lstMenuInfo=   MenuInfoHandler();
              this.ViewData["__menuInfo"] = lstMenuInfo;
             //注入
-             System.ComponentModel.Composition.Hosting.CompositionContainer container =
-                 new System.ComponentModel.Composition.Hosting.CompositionContainer(catalog);
+             //System.ComponentModel.Composition.Hosting.CompositionContainer container =
+             //     System.AppDomain.CurrentDomain.GetData("__@@container") as System.ComponentModel.Composition.Hosting.CompositionContainer;
              container.ComposeParts(this);
         }
 

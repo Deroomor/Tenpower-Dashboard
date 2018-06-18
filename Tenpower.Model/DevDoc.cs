@@ -1,5 +1,5 @@
 ﻿using System;
-using Azeroth.OMT;
+using Azeroth.Nalu;
 
 namespace Tenpower.Model
 {

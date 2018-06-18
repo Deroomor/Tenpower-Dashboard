@@ -9,7 +9,7 @@ namespace Tenpower.UI.Barometer.M1
     {
       
 
-        public Azeroth.MVC.ActionResult CP()
+        public Azeroth.Klz.ActionResult CP()
         {
             string monthKey = "month";
             var tmp = this.Context.Request[monthKey];
@@ -20,7 +20,7 @@ namespace Tenpower.UI.Barometer.M1
             return View();
         }
 
-        public Azeroth.MVC.ActionResult BMP()
+        public Azeroth.Klz.ActionResult BMP()
         {
             string monthKey = "month";
             var tmp = this.Context.Request[monthKey];

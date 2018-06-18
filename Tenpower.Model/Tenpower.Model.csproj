@@ -30,9 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Azeroth.OMT, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\Azeroth.OMT.dll</HintPath>
+    <Reference Include="Azeroth.Nalu">
+      <HintPath>..\lib\Azeroth.Nalu.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -46,7 +45,6 @@
     <Compile Include="DevDoc.cs" />
     <Compile Include="DevDocKeywords.cs" />
     <Compile Include="DTO\DevDoc.cs" />
-    <Compile Include="Enumerable3.cs" />
     <Compile Include="KeyValueSetInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="KeyValueSetInfo2.cs" />

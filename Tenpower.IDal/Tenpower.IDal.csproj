@@ -35,9 +35,9 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Azeroth.OMT, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Azeroth.Nalu, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\Azeroth.OMT.dll</HintPath>
+      <HintPath>..\lib\Azeroth.Nalu.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -48,8 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IArticle.cs" />
-    <Compile Include="IResposity.cs" />
+    <Compile Include="IDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

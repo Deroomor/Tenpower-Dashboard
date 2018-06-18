@@ -9,7 +9,7 @@ namespace Tenpower.UI.Barometer
     {
 
       
-        public Azeroth.MVC.ActionResult Index()
+        public Azeroth.Klz.ActionResult Index()
         {
             return View();
         }

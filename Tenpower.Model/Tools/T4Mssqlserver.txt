@@ -10,7 +10,7 @@
 <#@ import namespace="System.Data" #>
 <#@ output extension=".cs" #>
 using System;
-using Azeroth.OMT;
+using Azeroth.Nalu;
 
 namespace Tenpower.Model
 {

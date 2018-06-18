@@ -5,7 +5,8 @@ using System.Text;
 
 namespace Tenpower.Dal
 {
-    public class DbContext:Azeroth.OMT.DbContext<System.Data.SqlClient.SqlConnection>
+    [System.ComponentModel.Composition.Export(typeof(IDal.IDbContext))]
+    public class DbContext:Azeroth.Nalu.DbContext<System.Data.SqlClient.SqlConnection>,IDal.IDbContext
     {
         /// <summary>
         /// key=mssqlmaster的数据库连接配置
@@ -33,11 +34,15 @@ namespace Tenpower.Dal
 
         const string Leadchar = "@";
 
-        static Func<System.Data.Common.DbParameter> handler = () => new System.Data.SqlClient.SqlParameter();
 
-        protected override Azeroth.OMT.ResolverContext GetResolverContext(System.Data.Common.DbCommand cmd)
+        public override Azeroth.Nalu.ResovleContext GetResolvContext()
         {
-            return new Azeroth.OMT.ResolverContext(Leadchar,handler);
+            return new Azeroth.Nalu.ResovleContext(Leadchar,()=>new System.Data.SqlClient.SqlParameter());
+        }
+
+        public DbContext()
+        {
+            this.Cnnstr = MSSQLMaster;
         }
     }
 }

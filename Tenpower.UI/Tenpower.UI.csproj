@@ -39,13 +39,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Azeroth.MVC, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\Azeroth.MVC.dll</HintPath>
+    <Reference Include="Azeroth.Klz">
+      <HintPath>..\lib\Azeroth.Klz.dll</HintPath>
     </Reference>
-    <Reference Include="Azeroth.OMT, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\Azeroth.OMT.dll</HintPath>
+    <Reference Include="Azeroth.Nalu">
+      <HintPath>..\lib\Azeroth.Nalu.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -966,9 +964,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Tenpower.IDal\Tenpower.IDal.csproj">
-      <Project>{af8780e7-f89f-42da-9e44-066ad3c22e79}</Project>
-      <Name>Tenpower.IDal</Name>
+    <ProjectReference Include="..\Tenpower.IBll\Tenpower.IBll.csproj">
+      <Project>{d4863841-25e0-4ecf-840c-b9f8b4add38f}</Project>
+      <Name>Tenpower.IBll</Name>
     </ProjectReference>
     <ProjectReference Include="..\Tenpower.Model\Tenpower.Model.csproj">
       <Project>{9c03ab1d-1e98-459b-b339-9af56898d467}</Project>

@@ -8,7 +8,7 @@ namespace Tenpower.UI.Barometer.Market
     public class Quality:NavController
     {
 
-        public Azeroth.MVC.ActionResult BMP()
+        public Azeroth.Klz.ActionResult BMP()
         {
             string monthKey = "month";
             var tmp = this.Context.Request[monthKey];

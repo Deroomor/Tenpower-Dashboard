@@ -8,40 +8,40 @@ namespace Tenpower.UI.Doc
 {
     public class Document : NavController
     {
-        [System.ComponentModel.Composition.Import(typeof(IDal.IDevDoc))]
-        public IDal.IDevDoc DalDevDoc { get; set; }
+        [System.ComponentModel.Composition.Import(typeof(IBll.IAriticle))]
+        public IBll.IAriticle BllAriticle { get; set; }
 
 
-        public Azeroth.MVC.ActionResult Add()
+        public Azeroth.Klz.ActionResult Add()
         {
             var parameter = this.GetParameterUnvalidated<Model.DevDoc>();
             if (!parameter.Id.Equals(Guid.Empty))
-                parameter = DalDevDoc.GetEntity(x=>x.Id, Azeroth.OMT.WH.EQ,parameter.Id).FirstOrDefault()??new Model.DevDoc();
+                parameter = BllAriticle.GetEntityById(parameter.Id);
             this.ViewData["doc"] = parameter;
             return View();
         }
 
 
-        public Azeroth.MVC.ActionResult Save()
+        public Azeroth.Klz.ActionResult Save()
         {
             var parameter = this.GetParameterUnvalidated<Model.DevDoc>();
             parameter.DateInfo = DateTime.Now;
             parameter.Author = "wch";
-            DalDevDoc.Save(parameter);
-            return this.Redirect(string.Format("/Document/Home/Item?Id={0}",parameter.Id));
+            BllAriticle.Save(parameter);
+            return this.Redirect(string.Format("/Devolopment/Document/Item?Id={0}",parameter.Id));
         }
 
-        public Azeroth.MVC.ActionResult Index()
+        public Azeroth.Klz.ActionResult Index()
         {
-            List<Model.DevDoc> lst = DalDevDoc.GetEntity();
+            List<Model.DevDoc> lst = BllAriticle.GetEntity();
             ViewData["lstDoc"] = lst;
             return View();
         }
 
-        public Azeroth.MVC.ActionResult Item()
+        public Azeroth.Klz.ActionResult Item()
         {
             var parameter= this.GetParameter<Model.DevDoc>();
-            Model.DevDoc article = DalDevDoc.GetEntity(x=>x.Id, Azeroth.OMT.WH.EQ,parameter.Id).FirstOrDefault()??new Model.DevDoc();
+            Model.DevDoc article = BllAriticle.GetEntityById(parameter.Id);
             this.ViewData["doc"] = article;
             return View();
         }
@@ -50,7 +50,7 @@ namespace Tenpower.UI.Doc
         /// 处理富文本编辑器的文件上传
         /// </summary>
         /// <returns></returns>
-        public Azeroth.MVC.ActionResult SaveFile()
+        public Azeroth.Klz.ActionResult SaveFile()
         {
             var rst = new { err = string.Empty, msg = new { url = "!http://www.baidu.com/sa.txt", localname = "sa.txt", id = "1" } };
             return this.Json(rst);
